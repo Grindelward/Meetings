@@ -18,7 +18,6 @@ function deviceInfo() {
 
 	document.getElementById("deviceDetails").innerHTML = info;	
 }
-/*
 $( document ).on( "pagecreate", "#demo-page", function() {
     $( document ).on( "swipeleft swiperight", "#demo-page", function( e ) {
         // We check if there is no open panel on the page because otherwise
@@ -27,11 +26,12 @@ $( document ).on( "pagecreate", "#demo-page", function() {
         if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
             if ( e.type === "swipeleft" ) {
                 $( "#right-panel" ).panel( "open" );
+            } else if ( e.type === "swiperight" ) {
+                $( "#left-panel" ).panel( "open" );
             }
         }
     });
 });
-*/
 function testChange() {
 
 	 $('#content').html( $('#source-content').html() ); 
