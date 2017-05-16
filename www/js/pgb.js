@@ -17,7 +17,7 @@ function deviceInfo() {
 			'Device UUID    : '     + device.uuid + '<br>' + 
 			'Device Version : '  + device.version + '<br>';
 
-	document.getElementById("deviceDetails").innerHTML = info;	
+	navigator.notification.alert(myInfo);	
 }
 $( document ).on( "pagecreate", "#demo-page", function() {
     $( document ).on( "swipeleft swiperight", "#demo-page", function( e ) {
