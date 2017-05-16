@@ -1,5 +1,6 @@
 function init() {
 	document.addEventListener("deviceready",onDeviceReady, false);
+	$('#content').html( $('#main-content').html() ); 
 }
 
 function onDeviceReady() {
@@ -32,8 +33,28 @@ $( document ).on( "pagecreate", "#demo-page", function() {
         }
     });
 });
-function testChange() {
+function mainView() {
 
-	 $('#content').html( $('#source-content').html() ); 
+	 $('#content').html( $('#main-content').html() ); 
 	 
 }
+
+function meetingView() {
+
+	 $('#content').html( $('#meeeting-content').html() ); 
+	 
+}
+
+function addMeetingView() {
+
+	 $('#content').html( $('#add-meeeting-content').html() ); 
+	 
+}
+
+function authorView() {
+
+	 $('#content').html( $('#author-content').html() ); 
+	 
+}
+
+
