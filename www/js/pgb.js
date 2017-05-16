@@ -54,6 +54,11 @@ function addMeetingView() {
 function authorView() {
 
 	 $('#content').html( $('#author-content').html() ); 
+
+	 
+}function mapView() {
+
+	 $('#content').html( $('#googleMap').html() ); 
 	 
 }
 
@@ -64,3 +69,5 @@ var mapProp= {
 };
 var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
 }
+
+
