@@ -5,8 +5,30 @@ function init() {
 
 function onDeviceReady() {
 	navigator.notification.beep(2);
-	deviceInfo();
+	
+	var options      = new ContactFindOptions();
+options.filter   = "";
+options.multiple = true;
+fillter="name
+var fields       = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];
+navigator.contacts.find(fields, onSuccess, onError, options);
 }
+
+function onSuccess(contacts) {
+    for (var i = 0; i < contacts.length; i++) {
+        for (var j = 0; j < contacts[i].addresses.length; j++) {
+            alert("Pref: "         + contacts[i].addresses[j].pref          + "\n" +
+                "Type: "           + contacts[i].addresses[j].type          + "\n" +
+                "Formatted: "      + contacts[i].addresses[j].formatted     + "\n" +
+                "Street Address: " + contacts[i].addresses[j].streetAddress + "\n" +
+                "Locality: "       + contacts[i].addresses[j].locality      + "\n" +
+                "Region: "         + contacts[i].addresses[j].region        + "\n" +
+                "Postal Code: "    + contacts[i].addresses[j].postalCode    + "\n" +
+                "Country: "        + contacts[i].addresses[j].country);
+        }
+    }
+};
+
 
 function deviceInfo() {
 
@@ -17,8 +39,9 @@ function deviceInfo() {
 			'Device UUID    : '     + device.uuid + '<br>' + 
 			'Device Version : '  + device.version + '<br>';
 
-	navigator.notification.alert(myInfo);	
+	navigator.notification.alert(info);	
 }
+
 $( document ).on( "pagecreate", "#demo-page", function() {
     $( document ).on( "swipeleft swiperight", "#demo-page", function( e ) {
         // We check if there is no open panel on the page because otherwise
