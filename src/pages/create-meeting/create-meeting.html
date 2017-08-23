@@ -5,15 +5,58 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
+      <button ion-button [menuToggle]="activeMenu">
+          <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Create Meeting</ion-title>
+    <ion-title>CreateMeeting</ion-title>
   </ion-navbar>
+
 </ion-header>
 
 
 <ion-content padding>
+  
+    <ion-item>
+      <ion-label floating>Topic</ion-label>
+      <ion-input type="text" [(ngModel)]="meeting.topic" ></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating>Description</ion-label>
+      <ion-input type="text" [(ngModel)]="meeting.description" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Start Date</ion-label>
+      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="meeting.date"></ion-datetime>
+    </ion-item>
+  
+  
+    <ion-item>
+      <ion-label>Start Time</ion-label>
+      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="meeting.timeStarts"></ion-datetime>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>Ends</ion-label>
+      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="meeting.timeEnds"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+        <ion-label floating>Address</ion-label>
+        <ion-input type="text" [(ngModel)]="meeting.address" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label floating>Members</ion-label>
+        <ion-input type="text" [(ngModel)]="meeting.members" ></ion-input>
+    </ion-item>
+
+  
+    <button ion-button (click)="confirmMeeting(meeting)">Confirm</button>
+    
+
 
 </ion-content>

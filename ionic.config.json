@@ -1,6 +1,6 @@
 {
-  "name": "meetings",
-  "app_id": "1847765f",
+  "name": "BookList",
+  "app_id": "",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

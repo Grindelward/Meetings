@@ -9,8 +9,5 @@ import { CreateMeetingPage } from './create-meeting';
   imports: [
     IonicPageModule.forChild(CreateMeetingPage),
   ],
-  exports: [
-    CreateMeetingPage
-  ]
 })
 export class CreateMeetingPageModule {}
