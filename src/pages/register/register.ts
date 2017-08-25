@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { User } from "../../models/user";
+import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
 import { AngularFireAuth } from "angularfire2/auth";
 
 /**
@@ -18,9 +19,11 @@ import { AngularFireAuth } from "angularfire2/auth";
 export class RegisterPage {
 
   user = {} as User;
+  users: FirebaseListObservable<any[]>;
 
   constructor(private afAuth: AngularFireAuth,
-    public navCtrl: NavController, public navParams: NavParams) {
+    public navCtrl: NavController, public navParams: NavParams, angFire: AngularFireDatabase) {
+      this.users = angFire.list('/Users');
   }
 
   ionViewDidLoad() {
@@ -31,6 +34,11 @@ export class RegisterPage {
     try{
       const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
       console.log(result);
+      
+      if(result){
+        this.users.push({email:user.email})
+      }
+
     }catch(e){
       console.log(e);
     }

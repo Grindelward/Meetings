@@ -5,7 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { CreateMeetingPage } from "../pages/create-meeting/create-meeting";
 import { ListMeetingsPage } from "../pages/list-meetings/list-meetings";
 

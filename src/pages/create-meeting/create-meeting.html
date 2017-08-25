@@ -49,12 +49,15 @@
         <ion-input type="text" [(ngModel)]="meeting.address" ></ion-input>
     </ion-item>
 
-    <ion-item>
-        <ion-label floating>Members</ion-label>
-        <ion-input type="text" [(ngModel)]="meeting.members" ></ion-input>
-    </ion-item>
 
-  
+    <h2>User List</h2>
+    <ion-list>
+      <ion-item *ngFor="let user of users | async" >
+          <ion-label>{{user.email}}</ion-label>
+          <ion-checkbox [(ngModel)]="checked.members[user.email]" (click)="print()"  [disabled]="meeting.organizator==user.email"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+
     <button ion-button (click)="confirmMeeting(meeting)">Confirm</button>
     
 
