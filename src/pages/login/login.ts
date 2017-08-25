@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { User } from "../../models/user";
 import { AngularFireAuth } from "angularfire2/auth";
 
@@ -20,7 +20,7 @@ export class LoginPage {
   user = {} as User;
 
   constructor(private afAuth: AngularFireAuth,
-    public navCtrl: NavController, public navParams: NavParams) {
+    public navCtrl: NavController, public navParams: NavParams, private toast: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -29,12 +29,18 @@ export class LoginPage {
 
   async login(user: User){
     try{
-      const result = this.afAuth.auth.signInWithEmailAndPassword(this.user.email, this.user.password)
-      console.log(result);
-      if(result){
+
+      this.afAuth.auth.signInWithEmailAndPassword(this.user.email, this.user.password)
+      .then(o => {
         this.navCtrl.setRoot('HomePage');
-        
-      }
+      })
+      .catch(err => {
+        this.toast.create({
+          message: `${err}`,
+          duration: 3000 
+        }).present();
+      });
+
     }
     catch(e){
       console.error(e);

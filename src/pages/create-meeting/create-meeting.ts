@@ -34,17 +34,14 @@ export class CreateMeetingPage {
   }
 
   confirmMeeting(meeting: Meeting){
-    this.meetings = this.angFire.list('/Meetings');  
-
-    for (let member in this.checked.members) {
-      meeting.members.push({email: member, confirmed: false})
-    }
+    this.meetings = this.angFire.list('/Meetings'); 
     this.meetings.push(meeting) // pushing into firebase database
 
   }
 
   print = function() {
-    console.log(this.meeting);
+   // console.log(this.meeting);
   }
+  
 
 }

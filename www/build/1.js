@@ -45,7 +45,7 @@ LoginPageModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(62);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -100,10 +100,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
  * on Ionic pages and navigation.
  */
 var LoginPage = (function () {
-    function LoginPage(afAuth, navCtrl, navParams) {
+    function LoginPage(afAuth, navCtrl, navParams, toast) {
         this.afAuth = afAuth;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.toast = toast;
         this.user = {};
     }
     LoginPage.prototype.ionViewDidLoad = function () {
@@ -111,14 +112,19 @@ var LoginPage = (function () {
     };
     LoginPage.prototype.login = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var result;
+            var _this = this;
             return __generator(this, function (_a) {
                 try {
-                    result = this.afAuth.auth.signInWithEmailAndPassword(this.user.email, this.user.password);
-                    console.log(result);
-                    if (result) {
-                        this.navCtrl.setRoot('HomePage');
-                    }
+                    this.afAuth.auth.signInWithEmailAndPassword(this.user.email, this.user.password)
+                        .then(function (o) {
+                        _this.navCtrl.setRoot('HomePage');
+                    })
+                        .catch(function (err) {
+                        _this.toast.create({
+                            message: "" + err,
+                            duration: 3000
+                        }).present();
+                    });
                 }
                 catch (e) {
                     console.error(e);
@@ -139,7 +145,7 @@ LoginPage = __decorate([
         selector: 'page-login',template:/*ion-inline-start:"/home/prznow/Projects/Meetings/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Login</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-item>\n      <ion-label floating>Email Address</ion-label>\n      <ion-input type="text" [(ngModel)]="user.email" ></ion-input>\n  \n  </ion-item>\n\n  <ion-item>\n      <ion-label floating>Password</ion-label>\n      <ion-input type="password" [(ngModel)]="user.password" ></ion-input>\n  </ion-item>\n\n  <button ion-button (click)="login(user)">Login</button>\n  <button ion-button color="light" (click)="register()">Register</button>\n  \n  \n</ion-content>\n'/*ion-inline-end:"/home/prznow/Projects/Meetings/src/pages/login/login.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["a" /* AngularFireAuth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ToastController */]])
 ], LoginPage);
 
 //# sourceMappingURL=login.js.map

@@ -33,10 +33,12 @@ export class RegisterPage {
   async register(user: User){
     try{
       const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
-      console.log(result);
-      
+
       if(result){
-        this.users.push({email:user.email})
+        result.updateProfile({
+          displayName: user.username,
+        })
+        this.users.push({email:user.email, username: user.username})
       }
 
     }catch(e){
