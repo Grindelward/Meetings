@@ -7,7 +7,7 @@ webpackJsonp([5],{
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CreateMeetingPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(80);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -33,23 +33,32 @@ var CreateMeetingPage = (function () {
         this.afAuth = afAuth;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.angFire = angFire;
         this.meeting = {};
-        this.meetings = angFire.list('/Meetings');
+        this.checked = { members: [] };
+        this.print = function () {
+            console.log(this.meeting);
+        };
+        this.meeting.members = []; // place for members must be defined as array at begins
+        this.meeting.organizator = this.afAuth.auth.currentUser.email; //organizator is currentUser, needed for validation member list organizator is always member
+        this.users = angFire.list('/Users'); //list for members you could invite
     }
     CreateMeetingPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad CreateMeetingPage');
     };
     CreateMeetingPage.prototype.confirmMeeting = function (meeting) {
-        meeting.organizator = this.afAuth.auth.currentUser.email;
-        this.meetings.push(meeting);
-        console.log(this.meetings);
+        this.meetings = this.angFire.list('/Meetings');
+        for (var member in this.checked.members) {
+            meeting.members.push({ email: member, confirmed: false });
+        }
+        this.meetings.push(meeting); // pushing into firebase database
     };
     return CreateMeetingPage;
 }());
 CreateMeetingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-create-meeting',template:/*ion-inline-start:"/home/prznow/Projects/Meetings/src/pages/create-meeting/create-meeting.html"*/'<!--\n  Generated template for the CreateMeetingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n      <button ion-button [menuToggle]="activeMenu">\n          <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>CreateMeeting</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  \n    <ion-item>\n      <ion-label floating>Topic</ion-label>\n      <ion-input type="text" [(ngModel)]="meeting.topic" ></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label floating>Description</ion-label>\n      <ion-input type="text" [(ngModel)]="meeting.description" ></ion-input>\n    </ion-item>\n\n    <ion-item>\n      <ion-label>Start Date</ion-label>\n      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="meeting.date"></ion-datetime>\n    </ion-item>\n  \n  \n    <ion-item>\n      <ion-label>Start Time</ion-label>\n      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="meeting.timeStarts"></ion-datetime>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Ends</ion-label>\n      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="meeting.timeEnds"></ion-datetime>\n    </ion-item>\n\n    <ion-item>\n        <ion-label floating>Address</ion-label>\n        <ion-input type="text" [(ngModel)]="meeting.address" ></ion-input>\n    </ion-item>\n\n    <ion-item>\n        <ion-label floating>Members</ion-label>\n        <ion-input type="text" [(ngModel)]="meeting.members" ></ion-input>\n    </ion-item>\n\n  \n    <button ion-button (click)="confirmMeeting(meeting)">Confirm</button>\n    \n\n\n</ion-content>\n'/*ion-inline-end:"/home/prznow/Projects/Meetings/src/pages/create-meeting/create-meeting.html"*/,
+        selector: 'page-create-meeting',template:/*ion-inline-start:"/home/prznow/Projects/Meetings/src/pages/create-meeting/create-meeting.html"*/'<!--\n  Generated template for the CreateMeetingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n      <button ion-button [menuToggle]="activeMenu">\n          <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>CreateMeeting</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  \n    <ion-item>\n      <ion-label floating>Topic</ion-label>\n      <ion-input type="text" [(ngModel)]="meeting.topic" ></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label floating>Description</ion-label>\n      <ion-input type="text" [(ngModel)]="meeting.description" ></ion-input>\n    </ion-item>\n\n    <ion-item>\n      <ion-label>Start Date</ion-label>\n      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="meeting.date"></ion-datetime>\n    </ion-item>\n  \n  \n    <ion-item>\n      <ion-label>Start Time</ion-label>\n      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="meeting.timeStarts"></ion-datetime>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Ends</ion-label>\n      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="meeting.timeEnds"></ion-datetime>\n    </ion-item>\n\n    <ion-item>\n        <ion-label floating>Address</ion-label>\n        <ion-input type="text" [(ngModel)]="meeting.address" ></ion-input>\n    </ion-item>\n\n\n    <h2>User List</h2>\n    <ion-list>\n      <ion-item *ngFor="let user of users | async" >\n          <ion-label>{{user.email}}</ion-label>\n          <ion-checkbox [(ngModel)]="checked.members[user.email]" (click)="print()"  [disabled]="meeting.organizator==user.email"></ion-checkbox>\n      </ion-item>\n    </ion-list>\n\n    <button ion-button (click)="confirmMeeting(meeting)">Confirm</button>\n    \n\n\n</ion-content>\n'/*ion-inline-end:"/home/prznow/Projects/Meetings/src/pages/create-meeting/create-meeting.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]])
 ], CreateMeetingPage);
@@ -65,7 +74,7 @@ CreateMeetingPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListMeetingsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(62);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -98,7 +107,7 @@ var ListMeetingsPage = (function () {
 ListMeetingsPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-list-meetings',template:/*ion-inline-start:"/home/prznow/Projects/Meetings/src/pages/list-meetings/list-meetings.html"*/'<!--\n  Generated template for the ListMeetingsPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n      <button ion-button [menuToggle]="activeMenu">\n          <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>ListMeetings</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n    <h2>Meeting List</h2>\n    <ion-list>\n      <ion-item *ngFor="let meeting of meetings | async">\n        {{meeting.topic}}\n        {{meeting.description}}\n\n        \n      </ion-item>\n    </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/home/prznow/Projects/Meetings/src/pages/list-meetings/list-meetings.html"*/,
+        selector: 'page-list-meetings',template:/*ion-inline-start:"/home/prznow/Projects/Meetings/src/pages/list-meetings/list-meetings.html"*/'<!--\n  Generated template for the ListMeetingsPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n      <button ion-button [menuToggle]="activeMenu">\n          <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>ListMeetings</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n    <h2>Meeting List</h2>\n    <ion-list>\n      <ion-item *ngFor="let meeting of meetings | async">\n        {{meeting}}\n      \n\n        \n      </ion-item>\n    </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/home/prznow/Projects/Meetings/src/pages/list-meetings/list-meetings.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]])
 ], ListMeetingsPage);
@@ -172,7 +181,7 @@ module.exports = webpackAsyncContext;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(80);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -266,7 +275,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_create_meeting_create_meeting__ = __webpack_require__(139);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_list_meetings_list_meetings__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angularfire2__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angularfire2_database__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_angularfire2_database__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_angularfire2_auth__ = __webpack_require__(80);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;

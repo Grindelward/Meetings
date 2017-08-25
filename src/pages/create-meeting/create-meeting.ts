@@ -19,10 +19,14 @@ export class CreateMeetingPage {
 
   meeting = {} as Meeting;
   meetings: FirebaseListObservable<any[]>; 
+  users: FirebaseListObservable<any[]>;
+  checked = {members:[]};
 
-  constructor(public afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams,  angFire: AngularFireDatabase) {
-
-    this.meetings = angFire.list('/Meetings');  
+  constructor(public afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, public  angFire: AngularFireDatabase) {
+    this.meeting.members = []; // place for members must be defined as array at begins
+    this.meeting.organizator = this.afAuth.auth.currentUser.email //organizator is currentUser, needed for validation member list organizator is always member
+   
+    this.users = angFire.list('/Users'); //list for members you could invite
   }
 
   ionViewDidLoad() {
@@ -30,10 +34,17 @@ export class CreateMeetingPage {
   }
 
   confirmMeeting(meeting: Meeting){
-      meeting.organizator = this.afAuth.auth.currentUser.email
-      this.meetings.push(meeting)
-      console.log(this.meetings)
+    this.meetings = this.angFire.list('/Meetings');  
 
+    for (let member in this.checked.members) {
+      meeting.members.push({email: member, confirmed: false})
+    }
+    this.meetings.push(meeting) // pushing into firebase database
+
+  }
+
+  print = function() {
+    console.log(this.meeting);
   }
 
 }
