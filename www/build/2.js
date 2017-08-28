@@ -29,7 +29,7 @@ ListMeetingsPageModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__list_meetings__["a" /* ListMeetingsPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__list_meetings__["a" /* ListMeetingsPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__list_meetings__["a" /* ListMeetingsPage */]),
         ],
     })
 ], ListMeetingsPageModule);
