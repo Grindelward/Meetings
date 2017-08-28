@@ -45,8 +45,8 @@ export class CreateMeetingPage {
     this.meetings = this.angFire.list('/Meetings'); 
     this.meetings.push(meeting) // pushing into firebase database
 
-  this.calendar.createEvent(meeting.topic, meeting.address, meeting.description, new Date(), new Date())
-  this.calendar.openCalendar(meeting.date)
+   this.calendar.createEvent(meeting.topic, meeting.address, meeting.description, new Date(meeting.timeStarts), new Date(meeting.timeEnds))
+   this.calendar.openCalendar(meeting.date)
 
   }
 

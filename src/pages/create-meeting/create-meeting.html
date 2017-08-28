@@ -28,20 +28,15 @@
       <ion-input type="text" [(ngModel)]="meeting.description" ></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Start Date</ion-label>
-      <ion-datetime displayFormat="MMM DD YYYY HH MM" [(ngModel)]="meeting.date"></ion-datetime>
-    </ion-item>
-  
   
     <ion-item>
       <ion-label>Start Time</ion-label>
-      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="meeting.timeStarts"></ion-datetime>
+      <ion-datetime displayFormat="DD MMM YYYY HH mm" [(ngModel)]="meeting.timeStarts"></ion-datetime>
     </ion-item>
   
     <ion-item>
-      <ion-label>Ends</ion-label>
-      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="meeting.timeEnds"></ion-datetime>
+      <ion-label>Ends Time</ion-label>
+      <ion-datetime displayFormat="DD MMM YYYY HH mm" [(ngModel)]="meeting.timeEnds"></ion-datetime>
     </ion-item>
 
     <ion-item>

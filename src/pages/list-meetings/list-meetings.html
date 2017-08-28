@@ -20,7 +20,7 @@
 
     <h2>My Meetings List</h2>
     <ion-list>
-      <ion-item *ngFor="let meeting of myMeetings ">
+      <ion-item *ngFor="let meeting of myMeetings | async">
         {{meeting}}
       </ion-item>
     </ion-list>
