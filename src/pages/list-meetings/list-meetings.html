@@ -21,21 +21,28 @@
     <h2>My Meetings List</h2>
     <ion-list>
       <ion-item *ngFor="let meeting of myMeetings | async">
-        {{meeting}}
+        <button type="button" class="btn btn-info" (click)="openModal(meeting)">Details</button>
+        <button type="button" class="btn btn-danger" (click)="deleteMeeting(meeting.$key)">Delete</button>
+        
+        {{meeting.topic}}
       </ion-item>
     </ion-list>
 
     <h2>My invitated not confimed List</h2>
     <ion-list>
       <ion-item *ngFor="let meeting of notConfirmed | async">
-        {{meeting}}
+        <button type="button" class="btn btn-info" (click)="openModal(meeting)">Details</button>
+        {{meeting.topic}}
+        <button ion-button (click)="changeConfirmStatus(meeting.$key, false)" ></button>
       </ion-item>
     </ion-list>
 
     <h2>My invitated confimed List</h2>
     <ion-list>
       <ion-item *ngFor="let meeting of confirmed | async" >
-        {{meeting}}
+        <button type="button" class="btn btn-info" (click)="openModal(meeting)">Details</button>
+        {{meeting.topic}}
+        <button ion-button (click)="changeConfirmStatus(meeting.$key, true)" ></button>
       </ion-item>
     </ion-list>
 
