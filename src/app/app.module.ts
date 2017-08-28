@@ -12,6 +12,7 @@ import { ListMeetingsPage } from "../pages/list-meetings/list-meetings";
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from "angularfire2/auth";
+import { Calendar } from '@ionic-native/calendar';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAaRq099uf9IUl5aY7r2Go_02yJCQHKKU8",
@@ -44,7 +45,8 @@ export const firebaseConfig = {
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Calendar
   ]
 })
 export class AppModule {}

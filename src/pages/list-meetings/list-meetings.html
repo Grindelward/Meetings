@@ -18,13 +18,24 @@
 
 <ion-content padding>
 
-    <h2>Meeting List</h2>
+    <h2>My Meetings List</h2>
     <ion-list>
-      <ion-item *ngFor="let meeting of meetings | async">
+      <ion-item *ngFor="let meeting of myMeetings | async">
         {{meeting}}
-      
+      </ion-item>
+    </ion-list>
 
-        
+    <h2>My invitated not confimed List</h2>
+    <ion-list>
+      <ion-item *ngFor="let meeting of notConfirmed | async">
+        {{meeting}}
+      </ion-item>
+    </ion-list>
+
+    <h2>My invitated confimed List</h2>
+    <ion-list>
+      <ion-item *ngFor="let meeting of confirmed | async" >
+        {{meeting}}
       </ion-item>
     </ion-list>
 
