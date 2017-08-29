@@ -45,7 +45,6 @@ export const firebaseConfig = {
     CreateMeetingPage,
     ListMeetingsPage,
     AutocompletePage,
-    ListMeetingsPage, 
     ModalContentPage
 
   ],
