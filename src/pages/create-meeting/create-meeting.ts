@@ -37,7 +37,7 @@ export class CreateMeetingPage {
 
   confirmMeeting(meeting: Meeting){
     this.meetings = this.angFire.list('/Meetings');  
-
+    meeting.address = this.address.place;
     for (let member in this.checked.members) {
       meeting.members.push({email: member, confirmed: false})
     }
