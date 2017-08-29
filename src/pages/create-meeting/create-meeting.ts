@@ -28,12 +28,12 @@ export class CreateMeetingPage {
   checked = {members:[]};
   address; 
 
-  constructor(public afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, public  angFire: AngularFireDatabase, private calendar: Calendar) {
-this.meeting.members = []; // place for members must be defined as array at begins
+  constructor(public afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, public  angFire: AngularFireDatabase, private calendar: Calendar, public modalCtrl: ModalController) {
+    this.meeting.members = []; // place for members must be defined as array at begins
     this.meeting.organizator = this.afAuth.auth.currentUser.email //organizator is currentUser, needed for validation member list organizator is always member
-   
+    this.address = { place: '' };
     this.users = angFire.list('/Users'); //list for members you could invite
-this.calendar.createCalendar('MyCalendar').then(
+    this.calendar.createCalendar('MyCalendar').then(
       (msg) => { console.log(msg); },
       (err) => { console.log(err); }
     );
