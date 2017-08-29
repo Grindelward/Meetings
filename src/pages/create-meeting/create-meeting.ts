@@ -46,23 +46,20 @@ export class CreateMeetingPage {
   confirmMeeting(meeting: Meeting){
     this.meetings = this.angFire.list('/Meetings'); 
     meeting.address = this.address.place;
-for (let member in this.checked.members) {
-      meeting.members.push({email: member, confirmed: false})
+
+    for (let i of Object.keys(meeting.members)) {
+      if(!meeting.members[i]){
+        delete meeting.members[i]
+      }
     }
+
     this.meetings.push(meeting) // pushing into firebase database
-
-   this.calendar.createEvent(meeting.topic, meeting.address, meeting.description, new Date(meeting.timeStarts), new Date(meeting.timeEnds))
-   this.calendar.openCalendar(meeting.date)
+    this.calendar.createEvent(meeting.topic, meeting.address, meeting.description, new Date(meeting.timeStarts), new Date(meeting.timeEnds))
 
   }
 
-  print = function() {
-   // console.log(this.meeting);
-  }
-  
   showAddressModal () {
     let modal = this.modalCtrl.create(AutocompletePage);
-   let me = this;
     modal.onDidDismiss(data => {
       this.address.place = data;
     });
