@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, ViewController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
 import { AngularFireAuth } from "angularfire2/auth";
-
+import { MeetingDetailsPage } from "../meeting-details/meeting-details";
 /**
  * Generated class for the ListMeetingsPage page.
  *
@@ -63,7 +63,7 @@ export class ListMeetingsPage {
 
   openModal(meeting) {
     
-        let modal = this.modalCtrl.create(ModalContentPage,  { meeting: meeting });
+        let modal = this.modalCtrl.create(MeetingDetailsPage,  { meeting: meeting });
         modal.present();
   }
 
@@ -98,45 +98,45 @@ export class ListMeetingsPage {
 }
 
 
-@Component({
-  template: 
-  ` <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Meeting details
-    </ion-title>
-    <ion-buttons start>
-      <button ion-button (click)="dismiss()">
-        <span ion-text color="primary" showWhen="ios">Cancel</span>
-        <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-<ion-content>
-  <ion-list>
-      <ion-item>
-        <h2>{{meeting.organizator}}</h2>
-      </ion-item>
-  </ion-list>
-</ion-content>`
+// @Component({
+//   template: 
+//   ` <ion-header>
+//   <ion-toolbar>
+//     <ion-title>
+//       Meeting details
+//     </ion-title>
+//     <ion-buttons start>
+//       <button ion-button (click)="dismiss()">
+//         <span ion-text color="primary" showWhen="ios">Cancel</span>
+//         <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
+//       </button>
+//     </ion-buttons>
+//   </ion-toolbar>
+// </ion-header>
+// <ion-content>
+//   <ion-list>
+//       <ion-item>
+//         <h2>{{meeting.organizator}}</h2>
+//       </ion-item>
+//   </ion-list>
+// </ion-content>`
  
 
-})
-export class ModalContentPage {
-  meeting;
+// })
+// export class ModalContentPage {
+//   meeting;
 
-  constructor(
+//   constructor(
 
-    public params: NavParams,
-    public viewCtrl: ViewController
-  ) {
+//     public params: NavParams,
+//     public viewCtrl: ViewController
+//   ) {
     
-    this.meeting = params.get('meeting')
-    console.log(this.meeting)
-  }
+//     this.meeting = params.get('meeting')
+//     console.log(this.meeting)
+//   }
 
-  dismiss() {
-    this.viewCtrl.dismiss();
-  }
-}
+//   dismiss() {
+//     this.viewCtrl.dismiss();
+//   }
+// }

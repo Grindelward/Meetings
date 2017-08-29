@@ -7,7 +7,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { CreateMeetingPage } from "../pages/create-meeting/create-meeting";
 import { AutocompletePage } from "../pages/autocomplete/autocomplete";
-import { ListMeetingsPage, ModalContentPage } from "../pages/list-meetings/list-meetings";
+import { ListMeetingsPage } from "../pages/list-meetings/list-meetings";
+import { MeetingDetailsPage } from "../pages/meeting-details/meeting-details";
 
 
 import { AngularFireModule } from 'angularfire2';
@@ -30,7 +31,7 @@ export const firebaseConfig = {
     CreateMeetingPage,
     ListMeetingsPage,
     AutocompletePage,
-    ModalContentPage
+    MeetingDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -45,7 +46,7 @@ export const firebaseConfig = {
     CreateMeetingPage,
     ListMeetingsPage,
     AutocompletePage,
-    ModalContentPage
+    MeetingDetailsPage
 
   ],
   providers: [
