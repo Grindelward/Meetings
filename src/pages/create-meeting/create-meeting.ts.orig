@@ -1,0 +1,71 @@
+import { Component } from '@angular/core';
+import { IonicPage, NavController, ModalController, NavParams } from 'ionic-angular';
+import { Meeting } from "../../models/meeting";
+import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
+import { AngularFireAuth } from "angularfire2/auth";
+import { AutocompletePage } from "../autocomplete/autocomplete";
+/**
+ * Generated class for the CreateMeetingPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
+
+@IonicPage()
+@Component({
+  selector: 'page-create-meeting',
+  templateUrl: 'create-meeting.html',
+})
+export class CreateMeetingPage {
+
+  meeting = {} as Meeting;
+<<<<<<< HEAD
+  meetings: FirebaseListObservable<any[]>; 
+  users: FirebaseListObservable<any[]>;
+  checked = {members:[]};
+
+  constructor(public afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, public  angFire: AngularFireDatabase) {
+    this.meeting.members = []; // place for members must be defined as array at begins
+    this.meeting.organizator = this.afAuth.auth.currentUser.email //organizator is currentUser, needed for validation member list organizator is always member
+   
+    this.users = angFire.list('/Users'); //list for members you could invite
+=======
+  meetings: FirebaseListObservable<any[]>;
+  address; 
+
+  constructor(public afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController, angFire: AngularFireDatabase) {
+
+    this.meetings = angFire.list('/Meetings');  
+    this.address = { place: '' };
+>>>>>>> e60a278f28d87b60bdd5dcbf9f9777f5fb8f8af6
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad CreateMeetingPage');
+  }
+
+  confirmMeeting(meeting: Meeting){
+    this.meetings = this.angFire.list('/Meetings');  
+
+    for (let member in this.checked.members) {
+      meeting.members.push({email: member, confirmed: false})
+    }
+    this.meetings.push(meeting) // pushing into firebase database
+
+  }
+
+  print = function() {
+    console.log(this.meeting);
+  }
+
+  showAddressModal () {
+    let modal = this.modalCtrl.create(AutocompletePage);
+    let me = this;
+    modal.onDidDismiss(data => {
+      this.address.place = data;
+    });
+    modal.present();
+  }
+
+
+}
