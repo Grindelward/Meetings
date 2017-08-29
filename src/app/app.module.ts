@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { CreateMeetingPage } from "../pages/create-meeting/create-meeting";
 import { ListMeetingsPage } from "../pages/list-meetings/list-meetings";
+import { AutocompletePage } from "../pages/autocomplete/autocomplete";
 
 
 import { AngularFireModule } from 'angularfire2';
@@ -27,7 +28,8 @@ export const firebaseConfig = {
   declarations: [
     MyApp,
     CreateMeetingPage,
-    ListMeetingsPage
+    ListMeetingsPage,
+    AutocompletePage
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ export const firebaseConfig = {
   entryComponents: [
     MyApp,
     CreateMeetingPage,
-    ListMeetingsPage
+    ListMeetingsPage,
+    AutocompletePage
   ],
   providers: [
     StatusBar,
