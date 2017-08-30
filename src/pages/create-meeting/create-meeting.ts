@@ -26,7 +26,8 @@ export class CreateMeetingPage {
   meetings: FirebaseListObservable<any[]>;
   users: FirebaseListObservable<any[]>;
   checked = {members:[]};
-  address; 
+  address;
+  missing = {};
 
   constructor(public afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, public  angFire: AngularFireDatabase, private calendar: Calendar, public modalCtrl: ModalController) {
     this.meeting.members = []; // place for members must be defined as array at begins
@@ -37,6 +38,7 @@ export class CreateMeetingPage {
       (msg) => { console.log(msg); },
       (err) => { console.log(err); }
     );
+    this.missing= {};
   }
 
   ionViewDidLoad() {
@@ -44,17 +46,42 @@ export class CreateMeetingPage {
   }
 
   confirmMeeting(meeting: Meeting){
+    var required = ['topic', 'description', 'timeStarts', 'timeEnds', 'address']
     this.meetings = this.angFire.list('/Meetings'); 
     meeting.address = this.address.place;
-
+    var flag = 1;
     for (let i of Object.keys(meeting.members)) {
       if(!meeting.members[i]){
         delete meeting.members[i]
       }
     }
 
-    this.meetings.push(meeting) // pushing into firebase database
-    this.calendar.createEvent(meeting.topic, meeting.address, meeting.description, new Date(meeting.timeStarts), new Date(meeting.timeEnds))
+    for(let i of required){
+      if(!meeting[i]){
+        this.missing[i] = true
+      }
+    }
+    
+    console.log(this.missing)
+    
+    Object.keys(this.missing).forEach (key=> {
+      if ( this.missing[key] = true )
+        flag = 0;
+    });
+    if (flag)
+      {
+        this.meetings.push(meeting) // pushing into firebase database
+      }
+    else{
+      flag=1;
+    }
+        this.calendar.createEvent(meeting.topic, meeting.address, meeting.description, new Date(meeting.timeStarts), new Date(meeting.timeEnds))
+
+    for(let i of required){
+      if(!meeting[i]){
+        this.missing[i] = true
+      }
+    }
 
   }
 
