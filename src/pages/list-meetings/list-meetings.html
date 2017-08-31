@@ -35,7 +35,7 @@
       <ion-item *ngFor="let meeting of notConfirmed | async">
         <button ion-button round (click)="openModal(meeting)">Details</button>
         {{meeting.topic}}
-        <button ion-button round color="secondary" (click)="changeConfirmStatus(meeting.$key, false)" >Confirm</button>
+        <button ion-button round color="secondary" (click)="changeConfirmStatus(meeting, meeting.$key, false)" >Confirm</button>
       </ion-item>
     </ion-list>
 
@@ -44,7 +44,7 @@
       <ion-item *ngFor="let meeting of confirmed | async" >
           <button ion-button round (click)="openModal(meeting)">Details</button>
         {{meeting.topic}}
-        <button ion-button round color="dark" (click)="changeConfirmStatus(meeting.$key, true)" >Refuse</button>
+        <button ion-button round color="dark" (click)="changeConfirmStatus(meeting, meeting.$key, true)" >Refuse</button>
       </ion-item>
     </ion-list>
 

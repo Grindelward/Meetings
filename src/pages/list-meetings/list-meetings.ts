@@ -5,6 +5,7 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { MeetingDetailsPage } from "../meeting-details/meeting-details";
 import { EditMeetingPage } from "../edit-meeting/edit-meeting";
 import { Calendar } from "@ionic-native/calendar";
+import { Meeting } from "../../models/meeting";
 /**
  * Generated class for the ListMeetingsPage page.
  *
@@ -58,20 +59,78 @@ export class ListMeetingsPage {
 
   }
 
-  changeConfirmStatus(uid, status){
-    this.angFire.database.ref('/Meetings/' + uid + '/members/' + this.currentUser ).set(status)
-      console.log(uid + 'dasfddada: ' + status)
+  changeConfirmStatus(meeting: Meeting, uid, status){
+    try{
+      this.angFire.database.ref('/Meetings/' + uid + '/members/' + this.currentUser ).set(status)
 
+      if(!status){
+       this.calendar.createEvent(meeting.topic, meeting.address, meeting.description, new Date(meeting.starts), new Date(meeting.ends))      
+      }else{
+        this.calendar.deleteEvent(meeting.topic, meeting.address, meeting.description, new Date(meeting.starts), new Date(meeting.ends))      
+      }
+    }catch(e){
+      this.alertCtrl.create({
+        title: 'Error!!!',
+        message: e.message,
+        buttons: [
+          {
+            text: 'Close',
+            handler: () => {
+              console.log('Close clicked');
+              
+            }
+          }
+        ]
+      }).present();
+      console.log(e);
+    }
+    
   }
 
   openModal(meeting) {
-    let modal = this.modalCtrl.create(MeetingDetailsPage,  { meeting: meeting });
-    modal.present();
+    try{
+      let modal = this.modalCtrl.create(MeetingDetailsPage,  { meeting: meeting });
+      modal.present();
+    }catch(e){
+      this.alertCtrl.create({
+        title: 'Error!!!',
+        message: e.message,
+        buttons: [
+          {
+            text: 'Close',
+            handler: () => {
+              console.log('Close clicked');
+              
+            }
+          }
+        ]
+      }).present();
+      console.log(e);
+    }
+    
   }
 
   editModal(meeting, id){
-    let modal = this.modalCtrl.create(EditMeetingPage,  { meeting: meeting, id: id });
-    modal.present();
+    try{
+      let modal = this.modalCtrl.create(EditMeetingPage,  { meeting: meeting, id: id });
+      modal.present();
+    }catch(e){
+      this.alertCtrl.create({
+        title: 'Error!!!',
+        message: e.message,
+        buttons: [
+          {
+            text: 'Close',
+            handler: () => {
+              console.log('Close clicked');
+              
+            }
+          }
+        ]
+      }).present();
+      console.log(e);
+    }
+    
   }
 
   ionViewDidLoad() {
@@ -93,9 +152,26 @@ export class ListMeetingsPage {
         {
           text: 'Delete',
           handler: () => {
+            try{
             console.log('Agree clicked');
             this.calendar.deleteEvent(meeting['topic'], meeting['address'], meeting['description'], new Date(meeting['starts']), new Date(meeting['ends']))
             this.angFire.database.ref('/Meetings/' + uid ).remove()
+          }catch(e){
+            this.alertCtrl.create({
+              title: 'Error!!!',
+              message: e.message,
+              buttons: [
+                {
+                  text: 'Close',
+                  handler: () => {
+                    console.log('Close clicked');
+                    
+                  }
+                }
+              ]
+            }).present();
+            console.log(e);
+          }
           }
         }
       ]
@@ -104,47 +180,3 @@ export class ListMeetingsPage {
   }
 
 }
-
-
-// @Component({
-//   template: 
-//   ` <ion-header>
-//   <ion-toolbar>
-//     <ion-title>
-//       Meeting details
-//     </ion-title>
-//     <ion-buttons start>
-//       <button ion-button (click)="dismiss()">
-//         <span ion-text color="primary" showWhen="ios">Cancel</span>
-//         <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
-//       </button>
-//     </ion-buttons>
-//   </ion-toolbar>
-// </ion-header>
-// <ion-content>
-//   <ion-list>
-//       <ion-item>
-//         <h2>{{meeting.organizator}}</h2>
-//       </ion-item>
-//   </ion-list>
-// </ion-content>`
- 
-
-// })
-// export class ModalContentPage {
-//   meeting;
-
-//   constructor(
-
-//     public params: NavParams,
-//     public viewCtrl: ViewController
-//   ) {
-    
-//     this.meeting = params.get('meeting')
-//     console.log(this.meeting)
-//   }
-
-//   dismiss() {
-//     this.viewCtrl.dismiss();
-//   }
-// }

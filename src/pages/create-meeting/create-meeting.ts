@@ -48,6 +48,10 @@ export class CreateMeetingPage {
   }
 
   confirmMeeting(meeting: Meeting){
+    try{
+
+
+
     this.missing= [];
     var required = ['topic', 'description', 'starts', 'ends', 'address']
     this.meetings = this.angFire.list('/Meetings'); 
@@ -120,6 +124,22 @@ export class CreateMeetingPage {
           duration: 3000 
         }).present();
     }
+  }catch(e){
+    this.alertCtrl.create({
+      title: 'Error!!!',
+      message: e.message,
+      buttons: [
+        {
+          text: 'Close',
+          handler: () => {
+            console.log('Close clicked');
+            
+          }
+        }
+      ]
+    }).present();
+    console.log(e);
+  }
   
         
   }

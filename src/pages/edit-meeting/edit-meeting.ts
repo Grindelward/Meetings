@@ -34,6 +34,7 @@ export class EditMeetingPage {
   }
 
   update(){
+    try{
     var missing= [];
     var required = ['topic', 'description', 'starts', 'ends', 'address']
     var flag = true;
@@ -103,7 +104,22 @@ export class EditMeetingPage {
 
         this.dismiss(); 
     }
-  
+  }catch(e){
+    this.alertCtrl.create({
+      title: 'Error!!!',
+      message: e.message,
+      buttons: [
+        {
+          text: 'Close',
+          handler: () => {
+            console.log('Close clicked');
+            
+          }
+        }
+      ]
+    }).present();
+    console.log(e);
+  }
 
   }
 
