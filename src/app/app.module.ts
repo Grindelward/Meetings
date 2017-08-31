@@ -9,6 +9,7 @@ import { CreateMeetingPage } from "../pages/create-meeting/create-meeting";
 import { AutocompletePage } from "../pages/autocomplete/autocomplete";
 import { ListMeetingsPage } from "../pages/list-meetings/list-meetings";
 import { MeetingDetailsPage } from "../pages/meeting-details/meeting-details";
+import { EditMeetingPage } from "../pages/edit-meeting/edit-meeting";
 
 
 import { AngularFireModule } from 'angularfire2';
@@ -31,7 +32,8 @@ export const firebaseConfig = {
     CreateMeetingPage,
     ListMeetingsPage,
     AutocompletePage,
-    MeetingDetailsPage
+    MeetingDetailsPage,
+    EditMeetingPage
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,8 @@ export const firebaseConfig = {
     CreateMeetingPage,
     ListMeetingsPage,
     AutocompletePage,
-    MeetingDetailsPage
+    MeetingDetailsPage,
+    EditMeetingPage
 
   ],
   providers: [

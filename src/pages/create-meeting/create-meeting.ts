@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ModalController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, ModalController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { Meeting } from "../../models/meeting";
 import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
 import { AngularFireAuth } from "angularfire2/auth";
 import { Calendar } from '@ionic-native/calendar';
 import { AutocompletePage } from "../autocomplete/autocomplete";
+import { ListMeetingsPage } from "../list-meetings/list-meetings";
 
 
 
@@ -27,9 +28,10 @@ export class CreateMeetingPage {
   users: FirebaseListObservable<any[]>;
   checked = {members:[]};
   address;
-  missing = {};
+  missing =[];
 
-  constructor(public afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, public  angFire: AngularFireDatabase, private calendar: Calendar, public modalCtrl: ModalController) {
+  constructor(public afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, public angFire: AngularFireDatabase,
+     private calendar: Calendar, public modalCtrl: ModalController, public alertCtrl: AlertController, private toast: ToastController) {
     this.meeting.members = []; // place for members must be defined as array at begins
     this.meeting.organizator = this.afAuth.auth.currentUser.email //organizator is currentUser, needed for validation member list organizator is always member
     this.address = { place: '' };
@@ -38,7 +40,7 @@ export class CreateMeetingPage {
       (msg) => { console.log(msg); },
       (err) => { console.log(err); }
     );
-    this.missing= {};
+    
   }
 
   ionViewDidLoad() {
@@ -46,10 +48,12 @@ export class CreateMeetingPage {
   }
 
   confirmMeeting(meeting: Meeting){
-    var required = ['topic', 'description', 'timeStarts', 'timeEnds', 'address']
+    this.missing= [];
+    var required = ['topic', 'description', 'starts', 'ends', 'address']
     this.meetings = this.angFire.list('/Meetings'); 
-    meeting.address = this.address.place;
-    var flag = 1;
+    var flag = true;
+
+    //removing checked and unchecked member
     for (let i of Object.keys(meeting.members)) {
       if(!meeting.members[i]){
         delete meeting.members[i]
@@ -58,37 +62,72 @@ export class CreateMeetingPage {
 
     for(let i of required){
       if(!meeting[i]){
-        this.missing[i] = true
+        this.missing.push(i)
       }
     }
     
-    console.log(this.missing)
-    
-    Object.keys(this.missing).forEach (key=> {
-      if ( this.missing[key] = true )
-        flag = 0;
+
+    if(this.missing.length > 0){
+      
+        flag = false;
+        var textMesage = 'Some required fields not set, please fill fields: '
+
+        for(let i of this.missing){
+          textMesage += (i + ', ')
+        }
+
+        let confirm = this.alertCtrl.create({
+          title: 'Error creating meeting',
+          message: textMesage,
+          buttons: [
+            {
+              text: 'Close',
+              handler: () => {
+                console.log('Close clicked');
+                
+              }
+            }
+          ]
+        });
+        confirm.present();
+        
+    }
+
+    if(Date.parse(meeting.starts) > Date.parse(meeting.ends)){
+      flag = false;
+    let confirm = this.alertCtrl.create({
+      title: 'Error creating meeting',
+      message: 'Starts date cannot be later than ends',
+      buttons: [
+        {
+          text: 'Close',
+          handler: () => {
+            console.log('Close clicked');
+            
+          }
+        }
+      ]
     });
-    if (flag)
-      {
+    confirm.present();
+   }
+
+    if (flag){
         this.meetings.push(meeting) // pushing into firebase database
-      }
-    else{
-      flag=1;
+        this.calendar.createEvent(meeting.topic, meeting.address, meeting.description, new Date(meeting.starts), new Date(meeting.ends))
+        this.navCtrl.push(ListMeetingsPage);
+        this.toast.create({
+          message: `Meeting ${meeting.topic}, created successfully!!!`,
+          duration: 3000 
+        }).present();
     }
-        this.calendar.createEvent(meeting.topic, meeting.address, meeting.description, new Date(meeting.timeStarts), new Date(meeting.timeEnds))
-
-    for(let i of required){
-      if(!meeting[i]){
-        this.missing[i] = true
-      }
-    }
-
+  
+        
   }
 
   showAddressModal () {
     let modal = this.modalCtrl.create(AutocompletePage);
     modal.onDidDismiss(data => {
-      this.address.place = data;
+      this.meeting.address = data;
     });
     modal.present();
   }

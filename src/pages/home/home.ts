@@ -22,10 +22,9 @@ export class HomePage {
   constructor(private afAuth: AngularFireAuth, private toast: ToastController,
     public navCtrl: NavController, public navParams: NavParams, angFire: AngularFireDatabase) {
     
-    
     this.books = angFire.list('/Books');   
   }
-
+  
   ionViewWillLoad() {
     this.afAuth.authState.subscribe(data => {
       if(data && data.email && data.uid){

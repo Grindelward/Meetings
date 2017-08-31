@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { User } from "../../models/user";
 import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
 import { AngularFireAuth } from "angularfire2/auth";
@@ -22,7 +22,7 @@ export class RegisterPage {
   users: FirebaseListObservable<any[]>;
 
   constructor(private afAuth: AngularFireAuth,
-    public navCtrl: NavController, public navParams: NavParams, angFire: AngularFireDatabase) {
+    public navCtrl: NavController, public navParams: NavParams, angFire: AngularFireDatabase, private alertCtrl: AlertController) {
       this.users = angFire.list('/Users');
   }
 
@@ -32,18 +32,43 @@ export class RegisterPage {
 
   async register(user: User){
     try{
-      const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
+      this.checkUsername(user)
+        const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
+        
+              if(result){
+                result.updateProfile({
+                  displayName: user.username,
+                })
+                this.users.push({email:user.email, username: user.username})
+              }
 
-      if(result){
-        result.updateProfile({
-          displayName: user.username,
-        })
-        this.users.push({email:user.email, username: user.username})
-      }
+              this.navCtrl.push('LoginPage')
+  
+      
 
     }catch(e){
+      this.alertCtrl.create({
+        title: 'Error creating user',
+        message: e.message,
+        buttons: [
+          {
+            text: 'Close',
+            handler: () => {
+              console.log('Close clicked');
+              
+            }
+          }
+        ]
+      }).present();
       console.log(e);
     }
+  }
+
+  checkUsername(user){
+    if(!user['username'] ){
+      throw new Error('Username is mandratory!');
+    }
+
   }
 
 }
