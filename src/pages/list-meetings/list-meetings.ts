@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, ModalController, AlertController }
 import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
 import { AngularFireAuth } from "angularfire2/auth";
 import { MeetingDetailsPage } from "../meeting-details/meeting-details";
+import { EditMeetingPage } from "../edit-meeting/edit-meeting";
+import { Calendar } from "@ionic-native/calendar";
 /**
  * Generated class for the ListMeetingsPage page.
  *
@@ -27,7 +29,8 @@ export class ListMeetingsPage {
               public angFire: AngularFireDatabase,
               public afAuth: AngularFireAuth,
               public modalCtrl: ModalController,
-              public alertCtrl: AlertController) 
+              public alertCtrl: AlertController,
+              private calendar: Calendar) 
   {
     this.currentUser = this.afAuth.auth.currentUser.displayName;
     
@@ -62,16 +65,20 @@ export class ListMeetingsPage {
   }
 
   openModal(meeting) {
-    
-        let modal = this.modalCtrl.create(MeetingDetailsPage,  { meeting: meeting });
-        modal.present();
+    let modal = this.modalCtrl.create(MeetingDetailsPage,  { meeting: meeting });
+    modal.present();
+  }
+
+  editModal(meeting, id){
+    let modal = this.modalCtrl.create(EditMeetingPage,  { meeting: meeting, id: id });
+    modal.present();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ListMeetingsPage');
   }
 
-  deleteMeeting(uid) {
+  deleteMeeting(uid, meeting) {
     let confirm = this.alertCtrl.create({
       title: 'Delete this meeting?',
       message: 'Are you sure to delete this meeting, this action cannot be reversed',
@@ -87,6 +94,7 @@ export class ListMeetingsPage {
           text: 'Delete',
           handler: () => {
             console.log('Agree clicked');
+            this.calendar.deleteEvent(meeting['topic'], meeting['address'], meeting['description'], new Date(meeting['starts']), new Date(meeting['ends']))
             this.angFire.database.ref('/Meetings/' + uid ).remove()
           }
         }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { User } from "../../models/user";
 import { AngularFireAuth } from "angularfire2/auth";
 
@@ -20,7 +20,7 @@ export class LoginPage {
   user = {} as User;
 
   constructor(private afAuth: AngularFireAuth,
-    public navCtrl: NavController, public navParams: NavParams, private toast: ToastController) {
+    public navCtrl: NavController, public navParams: NavParams, private toast: ToastController, private alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -43,7 +43,20 @@ export class LoginPage {
 
     }
     catch(e){
-      console.error(e);
+      this.alertCtrl.create({
+        title: 'Error login',
+        message: e.message,
+        buttons: [
+          {
+            text: 'Close',
+            handler: () => {
+              console.log('Close clicked');
+              
+            }
+          }
+        ]
+      }).present();
+      console.log(e);
     }
     
   }
