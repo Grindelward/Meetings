@@ -1,26 +1,17 @@
 This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
 
-## How to use this template
+## MeetingApp
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+### Cel aplikacji:
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
+Celem aplikacji jest ułatwienie poinformowania innych użytkowników o planowanym przez siebie spotkaniu, oraz uzyskanie informacji zwrotnej dotyczącej ich uczestnictwa.
 
-### With the Ionic CLI:
+### Opis aplikacji:
 
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+Aplikacja MeetingApp jest prostym, lekkim menadżerem spotkań, w którym użytkownik może w szybki sposób utworzyć nowe wydarzenie oraz poinformować o nim innych. Zaproszeni za pomocą jednego kliknięcia mogą potwierdzić lub zanegować swoje uczestnictwo, dzięki czemu poinformują o tym organizatora, oraz innych zaproszonych. 
+Aplikacja automatycznie dodaje interesujące użytkownika spotkania do kalendarza, dzięki czemu nie pozwoli zapomnieć nawet o najmniej istotnym wydarzeniu.
 
-```bash
-$ sudo npm install -g ionic cordova
-$ ionic start myBlank blank
-```
+### Dane autorów:
 
-Then, to run it, cd into `myBlank` and run:
-
-```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
-```
-
-Substitute ios for android if not on a Mac.
-
+Przemysław Nowicki – Team Manager, przemyslaw.nowicki93@gmail.com
+Damian Figurski, damian.figurski@gmail.com 
