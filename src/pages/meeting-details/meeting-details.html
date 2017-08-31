@@ -26,24 +26,24 @@
     </ion-row>
 
     <ion-row>
-      <ion-col col-6>Description</ion-col>
+      <ion-col col-6>Description:</ion-col>
     </ion-row>
     <ion-row>
       <ion-col col-12>{{meeting.description}}</ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-col col-6>Organizator</ion-col>
+      <ion-col col-6>Organizator email:</ion-col>
       <ion-col col-6>{{meeting.organizator}}</ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-col col-6 >timeStarts</ion-col>
+      <ion-col col-6 >Time start:</ion-col>
       <ion-col col-6>{{meeting.timeStarts | date:'medium' }}</ion-col>
     </ion-row>
 
     <ion-row>
-        <ion-col col-6>timeEnds</ion-col>
+        <ion-col col-6>Time end:</ion-col>
         <ion-col col-6>{{meeting.timeEnds | date:'medium' }}</ion-col>
     </ion-row>
 
@@ -55,7 +55,7 @@
       </ion-row>
 
       <ion-row>
-          <ion-col col-6>Not confirmed members</ion-col>
+          <ion-col col-6>Not confirmed members:</ion-col>
         </ion-row>
         <ion-row *ngFor="let member of membersNonConfirmed">
             <ion-col col-12>{{member}}</ion-col>
@@ -63,7 +63,7 @@
        
 
         <ion-row>
-            <ion-col col-6>Confirmed Members</ion-col>
+            <ion-col col-6>Confirmed members:</ion-col>
           </ion-row>
           <ion-row *ngFor="let member of membersConfirmed">
             <ion-col col-12>{{member}}</ion-col>

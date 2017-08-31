@@ -25,15 +25,19 @@ export class MeetingDetailsPage {
     ) {
       
       this.meeting = params.get('meeting')
-      var keys = Object.keys(this.meeting.members)
-      for(var i = 0; i < keys.length; i++ ){
-          var k = keys[i]
-          if(this.meeting.members[k]){
-            this.membersNonConfirmed.push(k)
-          }else{
-            this.membersConfirmed.push(k)
-          }
+      
+      if(this.meeting.members){
+        var keys = Object.keys(this.meeting.members)
+        for(var i = 0; i < keys.length; i++ ){
+            var k = keys[i]
+            if(this.meeting.members[k]){
+              this.membersNonConfirmed.push(k)
+            }else{
+              this.membersConfirmed.push(k)
+            }
+        }
       }
+      
 
   
     }
