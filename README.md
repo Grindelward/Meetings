@@ -12,5 +12,4 @@ Aplikacja automatycznie dodaje interesujące użytkownika spotkania do kalendarz
 ### Dane autorów:
 
 Przemysław Nowicki – Team Manager, przemyslaw.nowicki93@gmail.com
-
 Damian Figurski, damian.figurski@gmail.com 
